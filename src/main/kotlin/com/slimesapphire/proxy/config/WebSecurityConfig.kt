@@ -36,7 +36,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 .dataSource(dataSource)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance())
                 .usersByUsernameQuery("select username, password, active from users where username=?")
-                .authoritiesByUsernameQuery("select u.username ur.roles from users u inner join user_role ur on u.id = ur.user_id where u.username=?")
+                .authoritiesByUsernameQuery("select u.username, ur.roles from users u inner join user_role ur on u.id = ur.user_id where u.username=?")
     }
 
     /*
