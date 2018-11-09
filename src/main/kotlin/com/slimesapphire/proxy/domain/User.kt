@@ -1,11 +1,13 @@
 package com.slimesapphire.proxy.domain
 
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 import javax.persistence.*
 
 
 @Entity
 @Table(name = "users")
-class User {
+class User : UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private var id: Long = 0
@@ -18,32 +20,59 @@ class User {
     @Enumerated(EnumType.STRING)
     private lateinit var roles: MutableSet<Role>
 
-    fun getId():Long{
-        return this.id
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
+        return getRoles()
     }
-    fun getUsername(): String {
+
+    override fun isEnabled(): Boolean {
+        return isActive()
+    }
+
+    override fun getUsername(): String {
         return this.username
     }
-    fun getPassword(): String {
+
+    override fun isCredentialsNonExpired(): Boolean {
+        return true
+    }
+
+    override fun getPassword(): String {
         return this.password
     }
-    fun getActive(): Boolean {
+
+    override fun isAccountNonExpired(): Boolean {
+        return true
+    }
+
+    override fun isAccountNonLocked(): Boolean {
+        return true
+    }
+
+    fun getId(): Long {
+        return this.id
+    }
+
+    fun isActive(): Boolean {
         return this.active
     }
-    fun getRoles(): MutableSet<Role>{
+
+    fun getRoles(): MutableSet<Role> {
         return this.roles
     }
 
-    fun setUsername(username: String){
+    fun setUsername(username: String) {
         this.username = username
     }
-    fun setPassword(password: String){
+
+    fun setPassword(password: String) {
         this.password = password
     }
-    fun setActive(active: Boolean){
+
+    fun setActive(active: Boolean) {
         this.active = active
     }
-    fun setRoles(roles: MutableSet<Role>){
+
+    fun setRoles(roles: MutableSet<Role>) {
         this.roles = roles
     }
 }

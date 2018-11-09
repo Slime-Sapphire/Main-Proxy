@@ -21,7 +21,7 @@ class RegistrationController {
 
     @PostMapping("/registration")
     fun register(user : User, model: MutableMap<String, Any>): String{
-        var userFromDb = userRepo.findByUsername(user.getUsername())
+        val userFromDb = userRepo.findByUsername(user.username)
         if(userFromDb != null){
             model["message"] = "User exists!"
             return "registration"
