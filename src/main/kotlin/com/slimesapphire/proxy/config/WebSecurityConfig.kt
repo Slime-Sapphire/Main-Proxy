@@ -36,26 +36,5 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(userService)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance())
-
-        /*
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery("select username, password, active from users where username=?")
-                .authoritiesByUsernameQuery("select u.username, ur.roles from users u inner join user_role ur on u.id = ur.user_id where u.username=?")
-                */
     }
-
-    /*
-    @Bean
-    override fun userDetailsService(): UserDetailsService {
-        val user = User.withDefaultPasswordEncoder()
-                .username("u")
-                .password("p")
-                .roles("USER")
-                .build()
-
-        return InMemoryUserDetailsManager(user)
-    }
-    */
 }
